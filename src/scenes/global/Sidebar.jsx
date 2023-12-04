@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 
 import { Menu, menuClasses, MenuItem, Sidebar } from "react-pro-sidebar";
+import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
@@ -77,39 +78,38 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <MenuItem
-      active={selected === title}
+    <Link
+      to={to}
       style={{
-        color: colors.grey[100],
-        position: "relative",
+        textDecoration: "none",
+        color: "inherit",
       }}
-      onClick={() => setSelected(title)}
-      icon={icon}
-      href={to}
-      // component="div"
-      rootStyles={{
-        ["." + menuClasses.button]: {
-          "&:hover": {
-            backgroundColor: `transparent !important`,
-            color: `${colors.blueAccent[300]} !important`,
-          },
-        },
-      }}
-      // to={to}
     >
-      <Typography>{title}</Typography>
-      {/* <Link
-        to={to}
-        // state={{
-        //   // position: "absolute",
-        //   top: "0",
-        //   left: "0",
-        //   width: "100%",
-        //   height: "100%",
-        //   backgroundColor: `${colors.blueAccent[300]} !important`,
-        // }}
-      /> */}
-    </MenuItem>
+      <MenuItem
+        active={selected === title}
+        style={{
+          color: `${
+            selected === title ? colors.blueAccent[400] : colors.grey[200]
+          }`,
+          position: "relative",
+        }}
+        onClick={() => setSelected(title)}
+        icon={icon}
+        // href={to}
+        component="div"
+        rootStyles={{
+          ["." + menuClasses.button]: {
+            "&:hover": {
+              backgroundColor: `transparent !important`,
+              color: `${colors.blueAccent[300]} !important`,
+            },
+          },
+        }}
+        // to={to}
+      >
+        <Typography>{title}</Typography>
+      </MenuItem>
+    </Link>
   );
 };
 
@@ -118,6 +118,7 @@ const SidebarComponent = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  console.log(selected);
   return (
     // <Box
     //   sx={{
